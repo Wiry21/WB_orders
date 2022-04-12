@@ -1,0 +1,27 @@
+version: "4.7"
+
+services:
+  db:
+    image: postgres:14.2-alpine
+    container_name: "database"
+    restart: always
+    environment:
+      - POSTGRES_DB=Wiry
+      - POSTGRES_USER=Wiry
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+  nats-stream: 
+    image: nats-streaming
+    restart: always
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+
+  go-docker-image:
+    build: ./
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/L0
